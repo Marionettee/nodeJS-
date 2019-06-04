@@ -11,6 +11,17 @@ const User = mongoose.model('user', new mongoose.Schema({
     user:{type:String,require:true},
     age:{type:Number,require:true}
 }))
+// 新增数据
+User.create({
+    user:'Conan',
+    age:24
+}),function(err,doc){
+    if(!err){
+        console.log(doc)
+    }else{
+        console.log(err)
+    }
+}
 // mongoose文档类型，String，Number等数据结构，create，remove，update，find增删改查
 const app = express();
 
@@ -19,7 +30,9 @@ app.get('/',function(req,res){
 })
 
 app.get('/test',function(req,res){
-    res.json({test:'123'})
+    User.find({},function(err,doc){
+        res.json(doc)
+    })
 })
 
 app.listen('8080',function(){
